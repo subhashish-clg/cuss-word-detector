@@ -12,6 +12,7 @@ import {
   GenerativeModel,
   SafetySetting,
 } from '@google/generative-ai';
+import { MessageResponse } from './gemini.entity';
 
 const SYSTEM_INSTRUCTION = `
       Act as an English cuss word detector and give a direct json output as follows: 
@@ -89,14 +90,16 @@ export class GeminiService implements OnModuleInit {
     });
   }
 
-  async checkCussWord(text: string) {
+  async checkCussWord(text: string): Promise<MessageResponse> {
     try {
       const result = await this.model.generateContent(text);
       const response: string = result.response.text();
 
       console.log(response);
 
-      return JSON.parse(response.replace('```json', '').replace('```', ''));
+      return JSON.parse(
+        response.replace('```json', '').replace('```', ''),
+      ) as MessageResponse;
     } catch (e) {
       throw new HttpException(
         'Internal Server Error',
