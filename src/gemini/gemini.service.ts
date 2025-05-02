@@ -3,7 +3,6 @@ import {
   HttpStatus,
   Injectable,
   OnModuleInit,
-  Query,
 } from '@nestjs/common';
 import {
   GoogleGenerativeAI,
@@ -13,7 +12,6 @@ import {
   SafetySetting,
 } from '@google/generative-ai';
 import { MessageResponse } from './gemini.entity';
-
 const SYSTEM_INSTRUCTION = `
       Act as an English cuss word detector and give a direct json output as follows: 
       \`\`\`
@@ -83,7 +81,7 @@ export class GeminiService implements OnModuleInit {
     this.genAI = new GoogleGenerativeAI(process.env['GEMINI_KEY']);
 
     this.model = this.genAI.getGenerativeModel({
-      model: 'gemini-1.5-pro',
+      model: 'gemini-2.5-flash-preview-04-17',
       generationConfig: GENERATION_CONFIG,
       systemInstruction: SYSTEM_INSTRUCTION,
       safetySettings: SAFETY_SETTINGS,
@@ -94,9 +92,7 @@ export class GeminiService implements OnModuleInit {
     try {
       const result = await this.model.generateContent(text);
       const response: string = result.response.text();
-
       console.log(response);
-
       return JSON.parse(
         response.replace('```json', '').replace('```', ''),
       ) as MessageResponse;

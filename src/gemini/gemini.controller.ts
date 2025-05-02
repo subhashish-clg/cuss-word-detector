@@ -1,21 +1,7 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpException,
-  HttpStatus,
-  Post,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { GeminiService } from './gemini.service';
 import { MessageBody } from './dto';
-import {
-  ApiOperation,
-  ApiProperty,
-  ApiQuery,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MessageResponse } from './gemini.entity';
 
 @ApiTags('Cuss Words Detection')
